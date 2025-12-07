@@ -1,7 +1,11 @@
 import estoque as est
+import utils.salvar_e_carregar as sec
+
+arquivo_estoque_nome = "estoque.txt"
 
 # Função do menu principal
 def menu_principal():  
+    arquivo_estoque_carregado = sec.carregar_dados(arquivo_estoque_nome)
     while True:
         # limpaTela()
         print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
@@ -18,7 +22,7 @@ def menu_principal():
             case "1":
                 pass
             case "2":
-                est.menu_estoque()
+                est.menu_estoque(arquivo_estoque_carregado)
             case "3":
                 pass
             case "4":
