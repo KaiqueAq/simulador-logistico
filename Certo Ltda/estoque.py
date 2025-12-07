@@ -1,9 +1,14 @@
-# estoque.py
 import utils.salvar_e_carregar as sec
 import estoque_saida
 from datetime import datetime
 
 arquivo_estoque = "estoque.txt"
+
+# Definições do Galpão
+area_total_galpao = 3000 # metros quadrados
+area_pequeno = 0.2  # Ocupa pouco espaço (Prateleira)
+area_medio = 1.0    # Ocupa um espaço médio (Pallet padrão)
+area_grande = 4.0   # Ocupa muito espaço (Chão/Blocado)
 
 # Funções de validação de entradas ============================================================================
 def ler_inteiro(mensagem):
@@ -45,7 +50,8 @@ def menu_estoque(lista_produtos):
         print('*--------------------------------*')
         print('|[1] Entrada de Produto          |')
         print('|[2] Saída de Produto            |')
-        print('|[3] Voltar ao Menu Principal    |')
+        print('|[3] Status do Galpão (3000m²)   |') # Nova opção adicionada
+        print('|[4] Voltar ao Menu Principal    |')
         print('*--------------------------------*')
         opcao = input('Digite a opção desejada: ')
         match opcao:
@@ -54,6 +60,8 @@ def menu_estoque(lista_produtos):
             case "2":
                 estoque_saida.menu_saida(lista_produtos)
             case "3":
+                ver_status_galpao(lista_produtos) # Chama a nova função
+            case "4":
                 return
             case _:
                 input('Opção inválida. Enter para continuar.')
@@ -84,12 +92,56 @@ def menu_entrada_produto(lista_produtos):
             case _:
                 input('Opção inválida.')
 
+# Lógica do galpão ==============================================================================
+def ver_status_galpao(lista_produtos):
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("|  STATUS DE OCUPAÇÃO (3000m²)  |")
+    print("*-------------------------------*")
+    
+    area_ocupada = 0.0
+    
+    # Calcula a área somando todos os produtos baseado no porte
+    for prod in lista_produtos:
+        # Pega a quantidade e o porte, garantindo que existem (usando get para evitar erro se faltar chave)
+        qtd = prod.get('quantidade', 0)
+        porte = prod.get('porte', 'Pequeno')
+        
+        match porte:
+            case "Pequeno":
+                area_ocupada += qtd * area_pequeno
+            case "Médio":
+                area_ocupada += qtd * area_medio
+            case "Grande":
+                area_ocupada += qtd * area_grande
+            
+    porcentagem = (area_ocupada / area_total_galpao) * 100
+    livre = area_total_galpao - area_ocupada
+    
+    # Cria uma barra de progresso visual
+    # Ex: [█████_____] 50.0%
+    barras = int(porcentagem / 5) # Cada barra vale 5%
+    if barras > 20: barras = 20
+    visual = "█" * barras + "_" * (20 - barras)
+    
+    print(f"\nUso: [{visual}] {porcentagem:.1f}%")
+    print(f"Ocupado: {area_ocupada:.1f} m²")
+    print(f"Livre:   {livre:.1f} m²")
+    
+    if porcentagem > 90:
+        print("X - ALERTA: Galpão quase lotado!")
+    elif porcentagem > 70:
+        print("X - ATENÇÃO: Ocupação alta.")
+    else:
+        print("Nível de ocupação saudável.")
+        
+    input("\nPressione Enter para voltar...")
+
 # Parte do Menu de Entrada ====================================================================================
 def cadastrar_produto(lista_produtos):
     while True:
         qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ")
         
-        if qnts_produtos < 10:
+        if qnts_produtos < 1:
             print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
             continue
         
@@ -115,6 +167,8 @@ def cadastrar_produto(lista_produtos):
                 # Se não existe, pede os dados
                 produto_nome = input("Nome do produto: ")  
                 
+                sugestao_setor = ""
+                
                 while True:
                     print("Selecione o porte: [1] Pequeno | [2] Médio | [3] Grande")
                     opcao_porte = input("Opção: ")
@@ -122,12 +176,15 @@ def cadastrar_produto(lista_produtos):
                     match opcao_porte:
                         case '1':
                             porte = "Pequeno"
+                            sugestao_setor = "Setor A (Prateleiras)"
                             break
                         case '2':
                             porte = "Médio"
+                            sugestao_setor = "Setor B (Pallets)"
                             break
                         case '3':
                             porte = "Grande"
+                            sugestao_setor = "Setor C (Blocado/Chão)"
                             break
                         case _:
                             print("Opção inválida. Tente novamente.")
@@ -135,6 +192,9 @@ def cadastrar_produto(lista_produtos):
                 data_fabricacao = ler_data("Data de fabricação (DD/MM/AAAA): ")
                 fornecedor = input("Fornecedor: ")
                 quantidade = ler_inteiro("Quantidade inicial: ")
+                
+                print(f"DICA: Para produtos '{porte}s', recomendamos o {sugestao_setor}.")
+                
                 local_armazenamento = input("Local de armazenamento: ")
                 valor_unitario = ler_float("Valor unitário (R$): ")
 
@@ -149,7 +209,7 @@ def cadastrar_produto(lista_produtos):
                     "valor_unitario": valor_unitario
                 }
                 
-                # CORREÇÃO 2: Adcionar o novo produto à lista
+                # Adiciona o novo produto à lista
                 lista_produtos.append(novo_produto)
         
         # Salvar a lista atualizada
@@ -175,7 +235,7 @@ def listar_produtos(lista_produtos):
         print(f"Porte:      {produto['porte']}")
         print(f"Fabricação: {produto['data_fabricacao']}")
         print(f"Qtd:        {produto['quantidade']}")
-        print(f"Preço:     R$ {produto['valor_unitario']:.2f}") 
+        print(f"Preço:      R$ {produto['valor_unitario']:.2f}") 
         print(f"Local:      {produto['local_armazenamento']}")
         print("-" * 31)
     
