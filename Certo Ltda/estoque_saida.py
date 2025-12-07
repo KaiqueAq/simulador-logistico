@@ -169,7 +169,6 @@ def gerar_relatorio_pedidos():
         print(f"Total de pedidos hoje (nesta sessão): {len(historico_pedidos)}")
         print("-" * 50)
         for i, p in enumerate(historico_pedidos):
-            # Alterado para mostrar Data e Hora
             print(f"#{i+1} [{p['data']} - {p['hora']}] - {p['cliente']}")
             print(f"   Produto: {p['produto_nome']} (ID: {p['produto_id']})")
             print(f"   Qtd: {p['qtd']} | Tipo: {p['tipo']}")
