@@ -1,5 +1,6 @@
 # estoque.py
 import utils.salvar_e_carregar as sec
+import estoque_saida
 from datetime import datetime
 
 arquivo_estoque = "estoque.txt"
@@ -51,7 +52,7 @@ def menu_estoque(lista_produtos):
             case "1":
                 menu_entrada_produto(lista_produtos)
             case "2":
-                menu_saida_produto()
+                estoque_saida.menu_saida(lista_produtos)
             case "3":
                 return
             case _:
@@ -78,11 +79,10 @@ def menu_entrada_produto(lista_produtos):
                 editar_produto(lista_produtos)
             case "4":
                 excluir_produto(lista_produtos)
+            case "5":
+                return
             case _:
                 input('Opção inválida.')
-
-def menu_saida_produto():
-    pass
 
 # Parte do Menu de Entrada ====================================================================================
 def cadastrar_produto(lista_produtos):
