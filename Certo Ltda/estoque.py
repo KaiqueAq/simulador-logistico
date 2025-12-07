@@ -76,6 +76,8 @@ def menu_entrada_produto(lista_produtos):
                 listar_produtos(lista_produtos)
             case "3":
                 editar_produto(lista_produtos)
+            case "4":
+                excluir_produto(lista_produtos)
             case _:
                 input('Opção inválida.')
 
@@ -252,4 +254,43 @@ def editar_produto(lista_produtos):
     # Salva as alterações no arquivo ao sair do loop de edição
     sec.salvar_dados(lista_produtos, arquivo_estoque)
     print("Alterações salvas no arquivo com sucesso!")
+    return lista_produtos
+
+def excluir_produto(lista_produtos):
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("|        EXCLUIR PRODUTO        |")
+    print("*-------------------------------*")
+    
+    id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja excluir: ")
+
+    # Busca o produto na lista
+    produto_encontrado = None
+    for produto in lista_produtos:
+        if produto['codigo'] == id_busca:
+            produto_encontrado = produto
+            break
+    
+    if not produto_encontrado:
+        print("Produto não encontrado!")
+        input("Pressione Enter para voltar...")
+        return lista_produtos
+
+    # Mostra os dados para confirmar a exclusão
+    print(f"\nATENÇÃO: Você está prestes a excluir:")
+    print(f"Nome: {produto_encontrado['nome']}")
+    print(f"Qtd em Estoque: {produto_encontrado['quantidade']}")
+    
+    confirmacao = input("Digite 'S' para CONFIRMAR a exclusão ou qualquer tecla para CANCELAR: ").upper().strip()
+    
+    if confirmacao == 'S':
+        # Remove da lista
+        lista_produtos.remove(produto_encontrado)
+        
+        # Salva a lista atualizada no arquivo
+        sec.salvar_dados(lista_produtos, arquivo_estoque)
+        print("\nProduto excluído com sucesso!")
+    else:
+        print("\nOperação cancelada. O produto não foi apagado.")
+    
+    input("Pressione Enter para continuar...")
     return lista_produtos
