@@ -1,0 +1,2 @@
+[07/12/2025 - 09:31] Cliente: Rodrigo Rodolfo | Prod: uvas (ID: 1) | Qtd: 1 | Tipo: Total
+[07/12/2025 - 09:51] Cliente: Marcelo Lima | Prod: banana (ID: 2) | Qtd: 7 | Tipo: Total

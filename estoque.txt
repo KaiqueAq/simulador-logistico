@@ -5,7 +5,7 @@
         "porte": "Pequeno",
         "data_fabricacao": "07/04/2025",
         "fornecedor": "Sadia",
-        "quantidade": 24,
+        "quantidade": 21,
         "local_armazenamento": "porat",
         "valor_unitario": 22.0
     },
@@ -15,7 +15,17 @@
         "porte": "Médio",
         "data_fabricacao": "08/12/2026",
         "fornecedor": "Carreful",
-        "quantidade": 47,
+        "quantidade": 40,
+        "local_armazenamento": "armário",
+        "valor_unitario": 103.0
+    },
+    {
+        "codigo": 3,
+        "nome": "manga",
+        "porte": "Médio",
+        "data_fabricacao": "08/12/2026",
+        "fornecedor": "Carreful",
+        "quantidade": 0,
         "local_armazenamento": "armário",
         "valor_unitario": 103.0
     }
