@@ -1,10 +1,10 @@
+# estoque.py
 import utils.salvar_e_carregar as sec
 from datetime import datetime
 
-arquivo_do_estoque = "estoque.txt"
+arquivo_estoque = "estoque.txt"
 
-#===================================================================================================
-# FUNÇÕES DE VALIDAÇÃO
+# --- FUNÇÕES DE VALIDAÇÃO ---
 def ler_inteiro(mensagem):
     while True:
         try:
@@ -14,7 +14,7 @@ def ler_inteiro(mensagem):
                 continue
             return valor
         except ValueError:
-            print("Erro: Digite um número inteiro válido (ex: 10, 50).")
+            print("Erro: Digite um número inteiro válido.")
 
 def ler_float(mensagem):
     while True:
@@ -25,21 +25,20 @@ def ler_float(mensagem):
                 continue
             return valor
         except ValueError:
-            print("Erro: Digite um valor numérico válido (ex: 25.50).")
+            print("Erro: Digite um valor numérico válido (use ponto para centavos).")
 
 def ler_data(mensagem):
     while True:
         data_str = input(mensagem)
         try:
-            # Tenta converter o texto para data no formato Dia/Mês/Ano
             datetime.strptime(data_str, "%d/%m/%Y")
             return data_str
         except ValueError:
-            print("Erro: Data inválida! Use o formato DD/MM/AAAA (ex: 31/12/2024).")
+            print("Erro: Data inválida! Use o formato DD/MM/AAAA.")
 
-#===================================================================================================
+# --- MENUS ---
 
-def menu_estoque(arquivo_estoque_atual_carregado):
+def menu_estoque(lista_produtos):
     while True:
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('| MENU ESTOQUE - (ESTOQUE CERTO) |')
@@ -51,7 +50,7 @@ def menu_estoque(arquivo_estoque_atual_carregado):
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
-                menu_entrada_produto(arquivo_estoque_atual_carregado)
+                menu_entrada_produto(lista_produtos)
             case "2":
                 menu_saida_produto()
             case "3":
@@ -59,13 +58,13 @@ def menu_estoque(arquivo_estoque_atual_carregado):
             case _:
                 input('Opção inválida. Enter para continuar.')
 
-def menu_entrada_produto(arquivo_estoque_atual_carregado):
+def menu_entrada_produto(lista_produtos):
     while True:
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|    MENU ENTRADA DE PRODUTO    |')
         print('*-------------------------------*')
         print('|[1] Cadastrar Produto          |')
-        print('|[2] Listar Produto             |')
+        print('|[2] Listar Produtos            |')
         print('|[3] Editar Produto             |')
         print('|[4] Excluir Produto            |')
         print('|[5] Voltar ao Menu Estoque     |')
@@ -73,52 +72,58 @@ def menu_entrada_produto(arquivo_estoque_atual_carregado):
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
-                cadastrar_produto(arquivo_estoque_atual_carregado)
+                cadastrar_produto(lista_produtos)
             case "2":
-                pass
-            case "3":
-                pass
-            case "4":
-                pass
-            case "5":
-                return
+                listar_produtos(lista_produtos)
             case _:
                 input('Opção inválida.')
 
 def menu_saida_produto():
     pass
 
-def cadastrar_produto(arquivo_dados):
+def listar_produtos(lista_produtos):
+    print("\n--- LISTA DE ESTOQUE ---")
+    if not lista_produtos:
+        print("Nenhum produto cadastrado.")
+    else:
+        for p in lista_produtos:
+            print(f"ID: {p['codigo']} | Nome: {p['nome']} | Qtd: {p['quantidade']} | Preço: R${p['valor_unitario']:.2f}")
+    input("\nPressione Enter para continuar...")
+
+def cadastrar_produto(lista_produtos):
     while True:
         qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ")
         
-        if qnts_produtos < 10:
-            print("Cadastre no mínimo 10 produtos de uma vez.")
-            continue
+        # if qnts_produtos < 10:
+        #     print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
+        #     continue
         
         for i in range(qnts_produtos):
             print(f"\n({i+1}/{qnts_produtos}) Cadastrando Produto:")
             
             produto_id = ler_inteiro("Digite o Código (ID) do produto: ")
             
-            # Evitar duplicidade
-            if produto_id in arquivo_dados:
-                print(f"O produto {produto_id} já existe! Vamos adicionar ao estoque existente.")
+            produto_encontrado = None
+            for item in lista_produtos:
+                if item['codigo'] == produto_id:
+                    produto_encontrado = item
+                    break
+            
+            if produto_encontrado:
+                print(f"O produto '{produto_encontrado['nome']}' (ID {produto_id}) já existe!")
+                nova_quantidade = ler_inteiro("Quantidade a adicionar ao estoque existente: ")
                 
-                nova_quantidade = ler_inteiro("Quantidade a adicionar: ")
-                
-                arquivo_dados[produto_id]['quantidade'] += nova_quantidade
-                print(f"Estoque atualizado! Nova quantidade: {arquivo_dados[produto_id]['quantidade']}")
+                produto_encontrado['quantidade'] += nova_quantidade
+                print(f"Estoque atualizado! Total: {produto_encontrado['quantidade']}")
             
             else:
-                produto_nome = input("Nome do produto: ").strip()
+                # Se não existe, pede os dados
+                produto_nome = input("Nome do produto: ")  
                 
-                # Loop de validação do Porte
                 while True:
-                    print("Selecione o porte do produto:")
-                    print("[1] Pequeno | [2] Médio | [3] Grande")
+                    print("Selecione o porte: [1] Pequeno | [2] Médio | [3] Grande")
                     opcao_porte = input("Opção: ")
-                    
+
                     match opcao_porte:
                         case '1':
                             porte = "Pequeno"
@@ -127,10 +132,10 @@ def cadastrar_produto(arquivo_dados):
                             porte = "Médio"
                             break
                         case '3':
-                            porte = "Grande"    
+                            porte = "Grande"
                             break
                         case _:
-                            print("Erro: Escolha 1, 2 ou 3.")
+                            print("Opção inválida. Tente novamente.")
 
                 data_fabricacao = ler_data("Data de fabricação (DD/MM/AAAA): ")
                 fornecedor = input("Fornecedor: ")
@@ -149,10 +154,12 @@ def cadastrar_produto(arquivo_dados):
                     "valor_unitario": valor_unitario
                 }
                 
-                arquivo_dados[produto_id] = novo_produto
+                # --- CORREÇÃO 2: Adicionar na lista com APPEND ---
+                lista_produtos.append(novo_produto)
         
-        sec.salvar_dados(arquivo_dados, arquivo_do_estoque)
-        print("\nTodos os produtos foram salvos com sucesso!")
+        # Salvar a lista atualizada
+        sec.salvar_dados(lista_produtos, arquivo_estoque)
+        print("\nProdutos cadastrados com sucesso!")
         break
         
-    return arquivo_dados
+    return lista_produtos

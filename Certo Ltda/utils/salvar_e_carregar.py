@@ -21,3 +21,17 @@ def carregar_dados(arquivo_atual):
         print(f"Erro ao carregar os dados de {arquivo_atual}: {e}")
         return {}
     
+def carregar_dados(arquivo_atual):
+    try:
+        with open(arquivo_atual, 'r', encoding="utf-8") as arquivo:
+            dadosCarregados = json.load(arquivo)
+        print(f"Dados carregados com sucesso de {arquivo_atual}!")
+        return dadosCarregados
+    
+    except FileNotFoundError:
+        return [] 
+    
+    except Exception as e:
+        print(f"Erro ao ler o arquivo (pode estar corrompido): {e}")
+        return []
+    
