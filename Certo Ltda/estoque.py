@@ -4,7 +4,7 @@ from datetime import datetime
 
 arquivo_estoque = "estoque.txt"
 
-# --- FUNÇÕES DE VALIDAÇÃO ---
+# Funções de validação de entradas ============================================================================
 def ler_inteiro(mensagem):
     while True:
         try:
@@ -36,8 +36,7 @@ def ler_data(mensagem):
         except ValueError:
             print("Erro: Data inválida! Use o formato DD/MM/AAAA.")
 
-# --- MENUS ---
-
+# PARTE DE MENUS E AFINS ======================================================================================
 def menu_estoque(lista_produtos):
     while True:
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
@@ -81,22 +80,14 @@ def menu_entrada_produto(lista_produtos):
 def menu_saida_produto():
     pass
 
-def listar_produtos(lista_produtos):
-    print("\n--- LISTA DE ESTOQUE ---")
-    if not lista_produtos:
-        print("Nenhum produto cadastrado.")
-    else:
-        for p in lista_produtos:
-            print(f"ID: {p['codigo']} | Nome: {p['nome']} | Qtd: {p['quantidade']} | Preço: R${p['valor_unitario']:.2f}")
-    input("\nPressione Enter para continuar...")
-
+# Parte do Menu de Entrada ====================================================================================
 def cadastrar_produto(lista_produtos):
     while True:
         qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ")
         
-        # if qnts_produtos < 10:
-        #     print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
-        #     continue
+        if qnts_produtos < 10:
+            print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
+            continue
         
         for i in range(qnts_produtos):
             print(f"\n({i+1}/{qnts_produtos}) Cadastrando Produto:")
@@ -154,7 +145,7 @@ def cadastrar_produto(lista_produtos):
                     "valor_unitario": valor_unitario
                 }
                 
-                # --- CORREÇÃO 2: Adicionar na lista com APPEND ---
+                # CORREÇÃO 2: Adcionar o novo produto à lista
                 lista_produtos.append(novo_produto)
         
         # Salvar a lista atualizada
@@ -163,3 +154,12 @@ def cadastrar_produto(lista_produtos):
         break
         
     return lista_produtos
+
+def listar_produtos(lista_produtos):
+    print("\n--- LISTA DE ESTOQUE ---")
+    if not lista_produtos:
+        print("Nenhum produto cadastrado.")
+    else:
+        for p in lista_produtos:
+            print(f"ID: {p['codigo']} | Nome: {p['nome']} | Qtd: {p['quantidade']} | Preço: R${p['valor_unitario']:.2f}")
+    input("\nPressione Enter para continuar...")
