@@ -17,6 +17,6 @@
         "fornecedor": "Carreful",
         "quantidade": 47,
         "local_armazenamento": "armário",
-        "valor_unitario": 7.0
+        "valor_unitario": 103.0
     }
 ]

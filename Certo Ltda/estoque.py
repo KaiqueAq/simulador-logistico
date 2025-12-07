@@ -74,6 +74,8 @@ def menu_entrada_produto(lista_produtos):
                 cadastrar_produto(lista_produtos)
             case "2":
                 listar_produtos(lista_produtos)
+            case "3":
+                editar_produto(lista_produtos)
             case _:
                 input('Opção inválida.')
 
@@ -177,3 +179,77 @@ def listar_produtos(lista_produtos):
     
     print(f"Total de produtos cadastrados: {len(lista_produtos)}")
     input("\nPressione Enter para voltar ao menu...")   
+
+def editar_produto(lista_produtos):
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=_")
+    print("|     EDITAR PRODUTO     |")
+    print("*------------------------*")
+    id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja editar: ")
+
+    # Busca o produto na lista
+    produto_encontrado = None
+    for produto in lista_produtos:
+        if produto['codigo'] == id_busca:
+            produto_encontrado = produto
+            break
+    
+    if not produto_encontrado:
+        print("Produto não encontrado!")
+        input("Pressione Enter para voltar...")
+        return lista_produtos
+
+    # Loop para editar vários campos do mesmo produto
+    while True:
+        print(f"\nEditando: {produto_encontrado['nome']} (ID: {produto_encontrado['codigo']})")
+        print("[1] Nome")
+        print("[2] Porte")
+        print("[3] Data de Fabricação")
+        print("[4] Fornecedor")
+        print("[5] Quantidade (Correção Manual)")
+        print("[6] Local de Armazenamento")
+        print("[7] Valor Unitário")
+        print("[0] Salvar e Sair da Edição")
+        
+        opcao = input("Qual campo deseja alterar? ")
+
+        match opcao:
+            case "1":
+                produto_encontrado['nome'] = input("Novo Nome: ")
+            case "2":
+                while True:
+                    print("Novo porte: [1] Pequeno | [2] Médio | [3] Grande")
+                    op = input("Opção: ")
+                    match op:
+                        case '1':
+                            produto_encontrado['porte'] = "Pequeno"
+                            break
+                        case '2':
+                            produto_encontrado['porte'] = "Médio"
+                            break
+                        case '3':
+                            produto_encontrado['porte'] = "Grande"
+                            break
+                        case _:
+                            print("Inválido.")
+                    if op in ['1', '2', '3']: break
+            case "3":
+                produto_encontrado['data_fabricacao'] = ler_data("Nova Data (DD/MM/AAAA): ")
+            case "4":
+                produto_encontrado['fornecedor'] = input("Novo Fornecedor: ")
+            case "5":
+                produto_encontrado['quantidade'] = ler_inteiro("Nova Quantidade: ")
+            case "6":
+                produto_encontrado['local_armazenamento'] = input("Novo Local: ")
+            case "7":
+                produto_encontrado['valor_unitario'] = ler_float("Novo Valor (R$): ")
+            case "0":
+                break
+            case _:
+                print("Opção inválida.")
+        
+        print("Alteração registrada (será salva ao sair).")
+    
+    # Salva as alterações no arquivo ao sair do loop de edição
+    sec.salvar_dados(lista_produtos, arquivo_estoque)
+    print("Alterações salvas no arquivo com sucesso!")
+    return lista_produtos
