@@ -1,3 +1,4 @@
+import operacional as op
 import estoque as est
 import financeiro as fin
 import utils.salvar_e_carregar as sec
@@ -22,7 +23,7 @@ def menu_principal():
         opcao = input('Digite a opção desejada: ')  
         match opcao:
             case "1":
-                pass
+                op.menu_operacional()
             case "2":
                 est.menu_estoque(arquivo_estoque_carregado)
             case "3":
