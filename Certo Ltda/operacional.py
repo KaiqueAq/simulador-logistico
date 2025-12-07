@@ -1,4 +1,6 @@
+
 # ----------- Função 1: Cálculo da capacidade com base nos turnos -----------
+
 def calcular_capacidade(turno_manha, turno_tarde, turno_noite, turnos_ativos):
     dias_mes = 30
     meses_ano = 12
@@ -51,6 +53,9 @@ def simular_turnos(turno_manha, turno_tarde, turno_noite):
 
     return resultados
 
+
+# ----------- Função 4: Menu operacional -----------
+
 def menu_operacional():
 
 # Definição dos turnos e capacidades (entrada do usuário)
@@ -70,6 +75,8 @@ def menu_operacional():
         turnos_ativos.append("tarde")
     if input("Ativar noite? (S/N): ").upper() == "S":
         turnos_ativos.append("noite")
+
+# ----------- Função 5: Cálculo de capacidades diária, mensal e anual -----------
 
     dados = calcular_capacidade(turno_manha, turno_tarde, turno_noite, turnos_ativos)
 
