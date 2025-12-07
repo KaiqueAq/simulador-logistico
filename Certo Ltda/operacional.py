@@ -1,3 +1,37 @@
+# ----------- Função 1: Cálculo da capacidade com base nos turnos -----------
+def calcular_capacidade(turno_manha, turno_tarde, turno_noite, turnos_ativos):
+    dias_mes = 30
+    meses_ano = 12
+
+    capacidade_diaria_total = turno_manha + turno_tarde + turno_noite
+
+    capacidade_atual = 0
+    if "manhã" in turnos_ativos:
+        capacidade_atual += turno_manha
+    if "tarde" in turnos_ativos:
+        capacidade_atual += turno_tarde
+    if "noite" in turnos_ativos:
+        capacidade_atual += turno_noite
+
+    capacidade_mensal = capacidade_atual * dias_mes
+    capacidade_anual = capacidade_mensal * meses_ano
+
+    diferenca_cap = capacidade_diaria_total - capacidade_atual
+    percentual_utilizacao = (capacidade_atual / capacidade_diaria_total) * 100
+
+    return {
+        "turnos_ativos": turnos_ativos,
+        "capacidade_diaria": capacidade_atual,
+        "capacidade_diaria_total": capacidade_diaria_total,
+        "capacidade_mensal": capacidade_mensal,
+        "capacidade_anual": capacidade_anual,
+        "diferenca_cap": diferenca_cap,
+        "percentual_utilizacao": percentual_utilizacao
+    }
+
+
+# ----------- Função 3: Simulação para 1, 2 e 3 turnos -----------
+
 def simular_turnos(turno_manha, turno_tarde, turno_noite):
     simulacoes = {
         "1 turno": [["manhã"], ["tarde"], ["noite"]],
