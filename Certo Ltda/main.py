@@ -1,7 +1,7 @@
-
+import estoque as est
 
 # Função do menu principal
-def main():  
+def menu_principal():  
     while True:
         # limpaTela()
         print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
@@ -16,9 +16,9 @@ def main():
         opcao = input('Digite a opção desejada: ')  
         match opcao:
             case "1":
-                pass 
-            case "2": 
                 pass
+            case "2":
+                est.menu_estoque()
             case "3":
                 pass
             case "4":
@@ -32,4 +32,4 @@ def main():
                 continue
 
 # Função que inicia o programa
-main()
+menu_principal()
