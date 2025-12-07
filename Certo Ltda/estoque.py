@@ -156,10 +156,27 @@ def cadastrar_produto(lista_produtos):
     return lista_produtos
 
 def listar_produtos(lista_produtos):
-    print("\n--- LISTA DE ESTOQUE ---")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("|       LISTA DE ESTOQUE        |")
+    print("*-------------------------------*")
+
+    # 1. Verificação se a lista está vazia
     if not lista_produtos:
-        print("Nenhum produto cadastrado.")
-    else:
-        for p in lista_produtos:
-            print(f"ID: {p['codigo']} | Nome: {p['nome']} | Qtd: {p['quantidade']} | Preço: R${p['valor_unitario']:.2f}")
-    input("\nPressione Enter para continuar...")
+        print("\n>>> O estoque está vazio no momento.")
+        input("Pressione Enter para voltar...")
+        return
+
+    # 2. Loop para mostrar cada produto
+    for produto in lista_produtos:
+        print(f"Código: {produto['codigo']}")
+        print(f"Nome:   {produto['nome']}")
+        print(f"Porte:  {produto['porte']}")
+        print(f"Data:   {produto['data_fabricacao']}")
+        print(f"Qtd:    {produto['quantidade']}")
+        print(f"Preço:  R$ {produto['valor']:.2f}") 
+        print(f"Local:  {produto['local']}")
+        print("-" * 30) # Separador visual entre produtos
+    
+    # 3. Pausa para ler antes de limpar a tela ou voltar
+    print(f"Total de produtos cadastrados: {len(lista_produtos)}")
+    input("\nPressione Enter para voltar ao menu...")   
