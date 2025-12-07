@@ -1,5 +1,6 @@
 import json
 
+
 def salvar_dados(dados_modificados, arquivo_atual):
     # Função que salva os dados modificados em um arquivo Txt identado com JSON
     try:
