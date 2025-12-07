@@ -1,3 +1,22 @@
+def simular_turnos(turno_manha, turno_tarde, turno_noite):
+    simulacoes = {
+        "1 turno": [["manhã"], ["tarde"], ["noite"]],
+        "2 turnos": [["manhã", "tarde"], ["manhã", "noite"], ["tarde", "noite"]],
+        "3 turnos": [["manhã", "tarde", "noite"]]
+    }
+
+    resultados = {}
+
+    for tipo, lista_turnos in simulacoes.items():
+        resultados[tipo] = []
+        for turnos_ativos in lista_turnos:
+            resultado = calcular_capacidade(
+                turno_manha, turno_tarde, turno_noite, turnos_ativos
+            )
+            resultados[tipo].append(resultado)
+
+    return resultados
+
 def menu_operacional():
 
 # Definição dos turnos e capacidades (entrada do usuário)
@@ -28,3 +47,4 @@ def menu_operacional():
     print(f"Capacidade anual: {dados['capacidade_anual']:,}")
     print(f"Diferença: {dados['diferenca_cap']:,}")
     print(f"Utilização: {dados['percentual_utilizacao']:.2f}%")
+
