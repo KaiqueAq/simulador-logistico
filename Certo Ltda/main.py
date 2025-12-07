@@ -1,7 +1,9 @@
 import estoque as est
+import financeiro as fin
 import utils.salvar_e_carregar as sec
 
 arquivo_estoque_nome = "estoque.txt"
+arquivo_relatorio_nome = "relatorio_pedidos.txt"
 
 # Função do menu principal
 def menu_principal():  
@@ -24,7 +26,7 @@ def menu_principal():
             case "2":
                 est.menu_estoque(arquivo_estoque_carregado)
             case "3":
-                pass
+                fin.menu_financeiro(arquivo_estoque_carregado, arquivo_relatorio_nome, arquivo_estoque_nome)
             case "4":
                 pass
             case "0":
