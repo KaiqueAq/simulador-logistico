@@ -160,23 +160,20 @@ def listar_produtos(lista_produtos):
     print("|       LISTA DE ESTOQUE        |")
     print("*-------------------------------*")
 
-    # 1. Verificação se a lista está vazia
     if not lista_produtos:
         print("\n>>> O estoque está vazio no momento.")
         input("Pressione Enter para voltar...")
         return
 
-    # 2. Loop para mostrar cada produto
     for produto in lista_produtos:
-        print(f"Código: {produto['codigo']}")
-        print(f"Nome:   {produto['nome']}")
-        print(f"Porte:  {produto['porte']}")
-        print(f"Data:   {produto['data_fabricacao']}")
-        print(f"Qtd:    {produto['quantidade']}")
-        print(f"Preço:  R$ {produto['valor']:.2f}") 
-        print(f"Local:  {produto['local']}")
-        print("-" * 30) # Separador visual entre produtos
+        print(f"Código:     {produto['codigo']}")
+        print(f"Nome:       {produto['nome']}")
+        print(f"Porte:      {produto['porte']}")
+        print(f"Fabricação: {produto['data_fabricacao']}")
+        print(f"Qtd:        {produto['quantidade']}")
+        print(f"Preço:     R$ {produto['valor_unitario']:.2f}") 
+        print(f"Local:      {produto['local_armazenamento']}")
+        print("-" * 31)
     
-    # 3. Pausa para ler antes de limpar a tela ou voltar
     print(f"Total de produtos cadastrados: {len(lista_produtos)}")
     input("\nPressione Enter para voltar ao menu...")   
