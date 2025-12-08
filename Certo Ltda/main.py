@@ -5,6 +5,7 @@ import utils.salvar_e_carregar as sec
 
 arquivo_estoque_nome = "estoque.txt"
 arquivo_relatorio_nome = "relatorio_pedidos.txt"
+arquivo_relatorio_nome = "relatorio_pedidos.txt"
 
 # Função do menu principal
 def menu_principal():  
