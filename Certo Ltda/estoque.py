@@ -1,7 +1,9 @@
 import utils.salvar_e_carregar as sec
 import estoque_saida
 from datetime import datetime
+from utils.limpatela import limpaTela
 
+# Arquivos
 arquivo_estoque = "estoque.txt"
 
 # Definições do Galpão
@@ -45,6 +47,7 @@ def ler_data(mensagem):
 # PARTE DE MENUS E AFINS ======================================================================================
 def menu_estoque(lista_produtos):
     while True:
+        limpaTela()
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('| MENU ESTOQUE - (ESTOQUE CERTO) |')
         print('*--------------------------------*')
@@ -56,10 +59,13 @@ def menu_estoque(lista_produtos):
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
+                limpaTela()
                 menu_entrada_produto(lista_produtos)
             case "2":
+                limpaTela()
                 estoque_saida.menu_saida(lista_produtos)
             case "3":
+                limpaTela()
                 ver_status_galpao(lista_produtos) # Chama a nova função
             case "4":
                 return
@@ -68,6 +74,7 @@ def menu_estoque(lista_produtos):
 
 def menu_entrada_produto(lista_produtos):
     while True:
+        limpaTela()
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|    MENU ENTRADA DE PRODUTO    |')
         print('*-------------------------------*')
@@ -80,12 +87,16 @@ def menu_entrada_produto(lista_produtos):
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
+                limpaTela()
                 cadastrar_produto(lista_produtos)
             case "2":
+                limpaTela()
                 listar_produtos(lista_produtos)
             case "3":
+                limpaTela()
                 editar_produto(lista_produtos)
             case "4":
+                limpaTela()
                 excluir_produto(lista_produtos)
             case "5":
                 return
@@ -141,7 +152,7 @@ def cadastrar_produto(lista_produtos):
     while True:
         qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ")
         
-        if qnts_produtos < 1:
+        if qnts_produtos < 10:
             print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
             continue
         

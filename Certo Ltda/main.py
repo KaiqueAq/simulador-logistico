@@ -4,6 +4,11 @@ import financeiro as fin
 import gestao_de_pessoas as gp
 import utils.salvar_e_carregar as sec
 import time
+from utils.limpatela import limpaTela
+
+# Nomes dos arquivos
+
+
 
 arquivo_estoque_nome = "estoque.txt"
 arquivo_relatorio_nome = "relatorio_pedidos.txt"
@@ -14,7 +19,7 @@ def menu_principal():
     arquivo_estoque_carregado = sec.carregar_dados(arquivo_estoque_nome)
     arquivo_funcionarios_carregado = sec.carregar_dados(arquivo_funcionarios_nome)
     while True:
-        # limpaTela()
+        limpaTela()
         print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('| MENU LOGÍSTICA - (ESTOQUE CERTO) |')
         print('*----------------------------------*')
@@ -27,14 +32,19 @@ def menu_principal():
         opcao = input('Digite a opção desejada: ')  
         match opcao:
             case "1":
+                limpaTela()
                 op.menu_operacional()
             case "2":
+                limpaTela()
                 est.menu_estoque(arquivo_estoque_carregado)
             case "3":
+                limpaTela()
                 fin.menu_financeiro(arquivo_estoque_carregado, arquivo_relatorio_nome, arquivo_estoque_nome)
             case "4":
+                limpaTela()
                 gp.menu_gestao_pessoas(arquivo_funcionarios_carregado)
             case "0":
+                limpaTela()
                 print('Encerrando o programa...')
                 time.sleep(1.5)
                 break

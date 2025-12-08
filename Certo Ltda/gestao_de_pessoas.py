@@ -1,5 +1,6 @@
 import utils.salvar_e_carregar as sec
 from datetime import datetime
+from utils.limpatela import limpaTela
 
 arquivo_funcionarios = "funcionarios.txt"
 arquivo_folha_pagamento = "folha_de_pagamento.txt"
@@ -21,6 +22,7 @@ def menu_gestao_pessoas(lista_funcionarios):
             popular_dados_teste(lista_funcionarios)
 
     while True:
+        limpaTela()
         print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('|        MENU GESTÃO DE PESSOAS      |')
         print('*------------------------------------*')
@@ -35,14 +37,19 @@ def menu_gestao_pessoas(lista_funcionarios):
 
         match opcao:
             case "1":
+                limpaTela()
                 cadastrar_funcionario(lista_funcionarios)
             case "2":
+                limpaTela()
                 gerar_folha_pagamento(lista_funcionarios)
             case "3":
+                limpaTela()
                 listar_funcionarios(lista_funcionarios)
             case "4":
+                limpaTela()
                 editar_funcionario(lista_funcionarios)
             case "5":
+                limpaTela()
                 excluir_funcionario(lista_funcionarios)
             case "6":
                 return
