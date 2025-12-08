@@ -1,7 +1,7 @@
 import operacional as op
 import estoque as est
 import financeiro as fin
-# import gestao_de_pessoas as gp
+import gestao_de_pessoas as gp
 import utils.salvar_e_carregar as sec
 import time
 
@@ -33,7 +33,7 @@ def menu_principal():
             case "3":
                 fin.menu_financeiro(arquivo_estoque_carregado, arquivo_relatorio_nome, arquivo_estoque_nome)
             case "4":
-                # gp.menu_gestao_pessoas(arquivo_funcionarios_carregado)
+                gp.menu_gestao_pessoas(arquivo_funcionarios_carregado)
                 pass
             case "0":
                 print('Encerrando o programa...')
