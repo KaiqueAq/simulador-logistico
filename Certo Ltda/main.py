@@ -34,7 +34,6 @@ def menu_principal():
                 fin.menu_financeiro(arquivo_estoque_carregado, arquivo_relatorio_nome, arquivo_estoque_nome)
             case "4":
                 gp.menu_gestao_pessoas(arquivo_funcionarios_carregado)
-                pass
             case "0":
                 print('Encerrando o programa...')
                 time.sleep(1.5)
