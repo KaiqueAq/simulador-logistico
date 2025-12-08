@@ -30,7 +30,22 @@ def calcular_capacidade(turno_manha, turno_tarde, turno_noite, turnos_ativos):
         "diferenca_cap": diferenca_cap,
         "percentual_utilizacao": percentual_utilizacao
     }
+# ----------- Função 2: Gerar relatório em TXT -----------
 
+def salvar_relatorio_txt(dados, nome_arquivo="relatorio_operacional.txt"):
+    with open(nome_arquivo, "w", encoding="utf-8") as arq:
+        arq.write("===== RELATÓRIO OPERACIONAL =====\n\n")
+        arq.write(f"Turnos ativos: {dados['turnos_ativos']}\n")
+        arq.write(f"Capacidade diária atual: {dados['capacidade_diaria']:,}\n")
+        arq.write(f"Capacidade diária total (100%): {dados['capacidade_diaria_total']:,}\n")
+        arq.write("-" * 40 + "\n")
+        arq.write(f"Capacidade mensal: {dados['capacidade_mensal']:,}\n")
+        arq.write(f"Capacidade anual: {dados['capacidade_anual']:,}\n")
+        arq.write("-" * 40 + "\n")
+        arq.write(f"Capacidade NÃO utilizada: {dados['diferenca_cap']:,}\n")
+        arq.write(f"Percentual de utilização: {dados['percentual_utilizacao']:.2f}%\n")
+
+    print(f"\nRelatório salvo em: {nome_arquivo}")
 
 # ----------- Função 3: Simulação para 1, 2 e 3 turnos -----------
 
