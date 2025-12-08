@@ -1,0 +1,12 @@
+===== RELATÓRIO OPERACIONAL =====
+
+Turnos ativos: ['manhã', 'noite']
+Base de dias para o mês: 30
+Capacidade diária atual: 4,832
+Capacidade diária total (100%): 7,177
+----------------------------------------
+Capacidade mensal: 144,960
+Capacidade anual: 1,739,520
+----------------------------------------
+Capacidade NÃO utilizada: 2,345
+Percentual de utilização: 67.33%
