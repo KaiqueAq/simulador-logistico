@@ -50,12 +50,12 @@ def menu_estoque(lista_produtos):
         limpaTela()
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('| MENU ESTOQUE - (ESTOQUE CERTO) |')
-        print('*--------------------------------*')
+        print('--------------------------------')
         print('|[1] Entrada de Produto          |')
         print('|[2] Saída de Produto            |')
         print('|[3] Status do Galpão (3000m²)   |') # Nova opção adicionada
         print('|[4] Voltar ao Menu Principal    |')
-        print('*--------------------------------*')
+        print('--------------------------------')
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
@@ -72,18 +72,145 @@ def menu_estoque(lista_produtos):
             case _:
                 input('Opção inválida. Enter para continuar.')
 
+def popular_dados_teste_produto(lista_produtos):
+    # dados fictícios para gerar produtos
+    dados_padrao_produto = [
+    {
+        "codigo": 1,
+        "nome": "Maçã Verde",
+        "porte": "Pequeno",
+        "data_fabricacao": "12/03/2026",
+        "fornecedor": "FrutalMix Ltda",
+        "quantidade": 120,
+        "local_armazenamento": "Setor A",
+        "valor_unitario": 4.5
+    },
+    {
+        "codigo": 2,
+        "nome": "Arroz Integral",
+        "porte": "Médio",
+        "data_fabricacao": "25/02/2026",
+        "fornecedor": "Campo Belo Distribuições",
+        "quantidade": 80,
+        "local_armazenamento": "Setor B",
+        "valor_unitario": 11.0
+    },
+    {
+        "codigo": 3,
+        "nome": "Leite Desnatado",
+        "porte": "Grande",
+        "data_fabricacao": "05/03/2026",
+        "fornecedor": "Laticínios BoaVista",
+        "quantidade": 200,
+        "local_armazenamento": "Câmara Fria 1",
+        "valor_unitario": 6.8
+    },
+    {
+        "codigo": 4,
+        "nome": "Kiwi",
+        "porte": "Pequeno",
+        "data_fabricacao": "08/04/2026",
+        "fornecedor": "Luis Jorge",
+        "quantidade": 46,
+        "local_armazenamento": "Setor A",
+        "valor_unitario": 12.0
+    },
+    {
+        "codigo": 5,
+        "nome": "Café Torrado",
+        "porte": "Médio",
+        "data_fabricacao": "19/01/2026",
+        "fornecedor": "Cafeteria Monte Alto",
+        "quantidade": 60,
+        "local_armazenamento": "Setor C",
+        "valor_unitario": 18.5
+    },
+    {
+        "codigo": 6,
+        "nome": "Feijão Preto",
+        "porte": "Médio",
+        "data_fabricacao": "11/03/2026",
+        "fornecedor": "AgroVale",
+        "quantidade": 95,
+        "local_armazenamento": "Setor B",
+        "valor_unitario": 7.2
+    },
+    {
+        "codigo": 7,
+        "nome": "Banana Nanica",
+        "porte": "Pequeno",
+        "data_fabricacao": "30/03/2026",
+        "fornecedor": "Hortifruti Brasil",
+        "quantidade": 150,
+        "local_armazenamento": "Setor A",
+        "valor_unitario": 3.9
+    },
+    {
+        "codigo": 8,
+        "nome": "Farinha de Trigo",
+        "porte": "Grande",
+        "data_fabricacao": "08/01/2026",
+        "fornecedor": "Moinhos União",
+        "quantidade": 70,
+        "local_armazenamento": "Setor C",
+        "valor_unitario": 9.5
+    },
+    {
+        "codigo": 9,
+        "nome": "Iogurte Natural",
+        "porte": "Pequeno",
+        "data_fabricacao": "28/03/2026",
+        "fornecedor": "Laticínios Vida Leve",
+        "quantidade": 110,
+        "local_armazenamento": "Câmara Fria 1",
+        "valor_unitario": 5.4
+    },
+    {
+        "codigo": 10,
+        "nome": "Óleo de Girassol",
+        "porte": "Grande",
+        "data_fabricacao": "15/02/2026",
+        "fornecedor": "NatureOil",
+        "quantidade": 90,
+        "local_armazenamento": "Setor C",
+        "valor_unitario": 13.7
+    }
+]
+    
+    adicionados = 0
+    for novo in dados_padrao_produto:
+        # Verifica duplicidade de produto antes de adicionar automaticamente
+        ja_existe = False
+        for p in lista_produtos:
+            if p['nome'] == novo['nome']:
+                ja_existe = True
+                break
+        
+        if not ja_existe:
+            lista_produtos.append(novo)
+            adicionados += 1
+
+    sec.salvar_dados(lista_produtos, arquivo_estoque)
+    print(f"{adicionados} produtos de teste foram adicionados!")
+
 def menu_entrada_produto(lista_produtos):
+    if not lista_produtos:
+        print("A lista de produtos está vazia.")
+        resp = input("Deseja carregar 10 produtos de teste automaticamente? (S/N): ").lower()
+        if resp == 's':
+            popular_dados_teste_produto(lista_produtos)
+
     while True:
         limpaTela()
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|    MENU ENTRADA DE PRODUTO    |')
-        print('*-------------------------------*')
+        print('-------------------------------')
         print('|[1] Cadastrar Produto          |')
         print('|[2] Listar Produtos            |')
         print('|[3] Editar Produto             |')
         print('|[4] Excluir Produto            |')
         print('|[5] Voltar ao Menu Estoque     |')
-        print('*-------------------------------*')
+        print('-------------------------------')
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
@@ -105,9 +232,9 @@ def menu_entrada_produto(lista_produtos):
 
 # Lógica do galpão ==============================================================================
 def ver_status_galpao(lista_produtos):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
     print("|  STATUS DE OCUPAÇÃO (3000m²)  |")
-    print("*-------------------------------*")
+    print("-------------------------------")
     
     area_ocupada = 0.0
     
@@ -129,7 +256,7 @@ def ver_status_galpao(lista_produtos):
     livre = area_total_galpao - area_ocupada
     
     # Cria uma barra de progresso visual
-    # Ex: [█████_____] 50.0%
+    # Ex: [█████___] 50.0%
     barras = int(porcentagem / 5) # Cada barra vale 5%
     if barras > 20: barras = 20
     visual = "█" * barras + "_" * (20 - barras)
@@ -231,9 +358,9 @@ def cadastrar_produto(lista_produtos):
     return lista_produtos
 
 def listar_produtos(lista_produtos):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
     print("|       LISTA DE ESTOQUE        |")
-    print("*-------------------------------*")
+    print("-------------------------------")
 
     if not lista_produtos:
         print("\n>>> O estoque está vazio no momento.")
@@ -254,9 +381,9 @@ def listar_produtos(lista_produtos):
     input("\nPressione Enter para voltar ao menu...")   
 
 def editar_produto(lista_produtos):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=")
     print("|     EDITAR PRODUTO     |")
-    print("*------------------------*")
+    print("------------------------")
     id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja editar: ")
 
     # Busca o produto na lista
@@ -328,9 +455,9 @@ def editar_produto(lista_produtos):
     return lista_produtos
 
 def excluir_produto(lista_produtos):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
     print("|        EXCLUIR PRODUTO        |")
-    print("*-------------------------------*")
+    print("-------------------------------")
     
     id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja excluir: ")
 
