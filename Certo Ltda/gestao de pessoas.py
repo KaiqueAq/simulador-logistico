@@ -12,6 +12,43 @@ valores_hora = {
     "Diretor": 80.0
 }
 
+def menu_gestao_pessoas(lista_funcionarios):
+    # verifica se a lista está vazia e pergunta se quer popular com dados de teste
+    if not lista_funcionarios:
+        print("A lista de funcionários está vazia.")
+        resp = input("Deseja carregar 5 funcionários de teste automaticamente? (S/N): ").lower()
+        if resp == 's':
+            popular_dados_teste(lista_funcionarios)
+
+    while True:
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+        print('|        MENU GESTÃO DE PESSOAS      |')
+        print('*------------------------------------*')
+        print('|[1] Cadastrar Funcionário           |')
+        print('|[2] Gerar Folha de Pagamento        |')
+        print('|[3] Listar Funcionários             |')
+        print('|[4] Editar Funcionário              |')
+        print('|[5] Excluir Funcionário             |')
+        print('|[6] Voltar ao Menu Principal        |')
+        print('*------------------------------------*')
+        opcao = input('Digite a opção desejada: ')
+
+        match opcao:
+            case "1":
+                cadastrar_funcionario(lista_funcionarios)
+            case "2":
+                gerar_folha_pagamento(lista_funcionarios)
+            case "3":
+                listar_funcionarios(lista_funcionarios)
+            case "4":
+                editar_funcionario(lista_funcionarios)
+            case "5":
+                excluir_funcionario(lista_funcionarios)
+            case "6":
+                return
+            case _:
+                input('Opção inválida. Enter para continuar.')
+
 def gerar_folha_pagamento(lista_funcionarios):
     if not lista_funcionarios:
         print("Nenhum funcionário cadastrado.")
