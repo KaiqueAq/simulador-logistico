@@ -143,4 +143,3 @@ def menu_operacional():
     
     # 5. SALVA O RELATÓRIO
     salvar_relatorio_txt(dados)
-
