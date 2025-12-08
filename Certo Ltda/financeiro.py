@@ -1,5 +1,5 @@
 import re # Módulo para expressões regulares, útil para extrair dados do relatório
-
+from utils.limpatela import limpaTela
 def ler_float(mensagem):
     """Lê um valor float positivo do usuário."""
     while True:
@@ -17,6 +17,7 @@ def menu_financeiro(lista_produtos, arquivo_relatorio, arquivo_estoque):
     Exibe o menu financeiro e direciona para as funções correspondentes.
     """
     while True:
+        limpaTela()
         print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|      MENU FINANCEIRO - VISÃO       |')
         print('*------------------------------------*')
@@ -29,10 +30,13 @@ def menu_financeiro(lista_produtos, arquivo_relatorio, arquivo_estoque):
         
         match opcao:
             case "1":
+                limpaTela()
                 ver_valor_total_estoque(lista_produtos)
             case "2":
+                limpaTela()
                 ver_receita_bruta(lista_produtos, arquivo_relatorio)
             case "3":
+                limpaTela()
                 calcular_custo_pallet()
             case "4":
                 return

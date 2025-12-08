@@ -1,5 +1,6 @@
 import utils.salvar_e_carregar as sec
 from datetime import datetime
+from utils.limpatela import limpaTela
 
 arquivo_estoque = "estoque.txt"
 arquivo_relatorio = "relatorio_pedidos.txt" # Nome do arquivo de relatório
@@ -25,6 +26,7 @@ def ler_inteiro(mensagem):
 # Menu de Saída de Produtos (Pedidos/Vendas)
 def menu_saida(lista_produtos):
     while True:
+        limpaTela()
         print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|    MENU SAÍDA (PEDIDOS/VENDAS)     ')
         # Mostra o contador visualmente para o usuário saber quanto falta
@@ -38,8 +40,10 @@ def menu_saida(lista_produtos):
         
         match opcao:
             case "1":
+                limpaTela()
                 processar_pedido(lista_produtos)
             case "2":
+                limpaTela()
                 gerar_relatorio_pedidos()
             case "3":
                 return
