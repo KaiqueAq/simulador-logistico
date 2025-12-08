@@ -23,16 +23,16 @@ def menu_gestao_pessoas(lista_funcionarios):
 
     while True:
         limpaTela()
-        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+        print('+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=')
         print('|        MENU GESTÃO DE PESSOAS      |')
-        print('*------------------------------------*')
+        print('------------------------------------')
         print('|[1] Cadastrar Funcionário           |')
         print('|[2] Gerar Folha de Pagamento        |')
         print('|[3] Listar Funcionários             |')
         print('|[4] Editar Funcionário              |')
         print('|[5] Excluir Funcionário             |')
         print('|[6] Voltar ao Menu Principal        |')
-        print('*------------------------------------*')
+        print('------------------------------------')
         opcao = input('Digite a opção desejada: ')
 
         match opcao:
@@ -130,9 +130,9 @@ def gerar_folha_pagamento(lista_funcionarios):
     input("Pressione Enter para voltar...")
 
 def cadastrar_funcionario(lista_funcionarios):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+")
     print("|  Cadastro de Funcionário  |")
-    print("*---------------------------*")
+    print("---------------------------")
     
     # Validação simples de nome
     while True:
@@ -163,10 +163,22 @@ def cadastrar_funcionario(lista_funcionarios):
     # Validação de RG (10 caracteres)
     while True:
         rg = input("RG (10 caracteres): ").strip()
-        if len(rg) != 10:
-            print("Erro: RG deve conter exatamente 10 caracteres.")
+        if not rg.isdigit() or len(rg) != 10:
+            print("Erro: RG deve conter exatamente 10 dígitos numéricos.")
+            continue
+        
+        # Verifica se já existe
+        rg_existe = False
+        for r in lista_funcionarios:
+            if r['rg'] == rg:
+                rg_existe = True
+                break
+        
+        if rg_existe:
+            print("Erro: Este RG já está cadastrado no sistema.")
         else:
-            break
+            break # RG válido e único
+
 
     endereco = input("Endereço: ")
     telefone = input("Telefone: ")
@@ -204,9 +216,9 @@ def cadastrar_funcionario(lista_funcionarios):
 
     
 def editar_funcionario(lista_funcionarios):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=")
     print("|   Editar Funcionário   |")
-    print("*------------------------*")
+    print("------------------------")
     cpf_busca = input("Digite o CPF do funcionário que deseja editar: ").strip()
 
     funcionario_encontrado = None
@@ -266,9 +278,9 @@ def editar_funcionario(lista_funcionarios):
         print("Dados atualizados.")
 
 def excluir_funcionario(lista_funcionarios):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+")
     print("|  Excluir Funcionário  |")
-    print("*-----------------------*")
+    print("-----------------------")
     cpf_busca = input("Digite o CPF do funcionário que deseja excluir: ").strip()
 
     funcionario_encontrado = None
@@ -300,9 +312,9 @@ def excluir_funcionario(lista_funcionarios):
 
 
 def listar_funcionarios(lista_funcionarios):
-    print("_+=+=+=+=+=+=+=+=+=+=+=+=+_")
+    print("+=+=+=+=+=+=+=+=+=+=+=+=+")
     print("|  Lista de Funcionários  |")
-    print("*-------------------------*")
+    print("-------------------------")
 
     if not lista_funcionarios:
         print("Nenhum funcionário cadastrado.")
