@@ -167,6 +167,7 @@ def excluir_funcionario(lista_funcionarios):
     
     input("Enter para continuar...")
 
+
 def listar_funcionarios(lista_funcionarios):
     print("_+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  Lista de Funcionários  |")
@@ -180,6 +181,39 @@ def listar_funcionarios(lista_funcionarios):
     for f in lista_funcionarios:
         print(f"Nome: {f['nome']} | Cargo: {f['cargo']} | CPF: {f['cpf']} | RG: {f['rg']}")
     input("Enter para voltar...")
+
+def calcular_inss(salario_bruto):
+    # cálculo simplificado progressivo 2024/2025
+    if salario_bruto <= 1412.00:
+        return salario_bruto * 0.075
+    elif salario_bruto <= 2666.68:
+        return salario_bruto * 0.09
+    elif salario_bruto <= 4000.03:
+        return salario_bruto * 0.12
+    elif salario_bruto <= 7786.02:
+        return salario_bruto * 0.14
+    else:
+        return 7786.02 * 0.14 # teto
+
+def calcular_irpf_anual(base_calculo_mensal):
+    # tabela progressiva mensal simplificada
+    ir_mensal = 0.0
+    
+    if base_calculo_mensal <= 2259.20:
+        ir_mensal = 0.0
+    elif base_calculo_mensal <= 2826.65:
+        ir_mensal = (base_calculo_mensal * 0.075) - 169.44
+    elif base_calculo_mensal <= 3751.05:
+        ir_mensal = (base_calculo_mensal * 0.15) - 381.44
+    elif base_calculo_mensal <= 4664.68:
+        ir_mensal = (base_calculo_mensal * 0.225) - 662.77
+    else:
+        ir_mensal = (base_calculo_mensal * 0.275) - 896.00
+        
+    if ir_mensal < 0: ir_mensal = 0
+    
+    # retorna a projeção anual
+    return ir_mensal * 12
 
 def popular_dados_teste(lista_funcionarios):
     # dados fictícios ajustados para as novas regras de validação (CPF 11, RG 10)
