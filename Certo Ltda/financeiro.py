@@ -1,5 +1,6 @@
 import re # Módulo para expressões regulares, útil para extrair dados do relatório
 from utils.limpatela import limpaTela
+
 def ler_float(mensagem):
     """Lê um valor float positivo do usuário."""
     while True:

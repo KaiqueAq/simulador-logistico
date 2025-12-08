@@ -7,9 +7,6 @@ import time
 from utils.limpatela import limpaTela
 
 # Nomes dos arquivos
-
-
-
 arquivo_estoque_nome = "estoque.txt"
 arquivo_relatorio_nome = "relatorio_pedidos.txt"
 arquivo_funcionarios_nome = "funcionarios.txt"
