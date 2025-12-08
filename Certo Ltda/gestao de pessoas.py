@@ -1,3 +1,90 @@
+import utils.salvar_e_carregar as sec
+from datetime import datetime
+
+arquivo_funcionarios = "funcionarios.txt"
+arquivo_folha_pagamento = "folha_de_pagamento.txt"
+
+# tabela de valores hora por cargo (configuração)
+valores_hora = {
+    "Operário": 15.0,
+    "Supervisor": 40.0,
+    "Gerente": 60.0,
+    "Diretor": 80.0
+}
+
+def gerar_folha_pagamento(lista_funcionarios):
+    if not lista_funcionarios:
+        print("Nenhum funcionário cadastrado.")
+        return
+
+    # ordena a lista por nome
+    lista_ordenada = sorted(lista_funcionarios, key=lambda x: x['nome'])
+    
+    carga_padrao = 160
+    data_atual = datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    # Prepara o conteúdo para exibir e salvar
+    linhas_relatorio = []
+    
+    cabecalho_topo = "="*100
+    titulo = f"FOLHA DE PAGAMENTO - GERADA EM: {data_atual}"
+    cabecalho_colunas = f"{'NOME':<20} | {'CARGO':<10} | {'BRUTO':<10} | {'EXTRAS':<10} | {'LÍQUIDO':<10} | {'IR ANUAL':<10} | {'PAGA IR?'}"
+    
+    linhas_relatorio.append(cabecalho_topo)
+    linhas_relatorio.append(titulo)
+    linhas_relatorio.append(cabecalho_topo)
+    linhas_relatorio.append(cabecalho_colunas)
+    linhas_relatorio.append("="*100)
+
+    for func in lista_ordenada:
+        cargo = func['cargo']
+        valor_h = valores_hora.get(cargo, 15.0)
+        
+        # cálculo base
+        salario_base = valor_h * carga_padrao
+        
+        # cálculo horas extras
+        valor_extras = 0.0
+        horas_extras_feitas = 0
+        
+        # gerentes e diretores não recebem hora extra (regra de negócio)
+        if cargo not in ["Gerente", "Diretor"]:
+            # simulando horas extras (fixo em 5h para visualização no relatório)
+            horas_extras_feitas = 5 
+            valor_extras = horas_extras_feitas * (valor_h * 2) # 100% de acréscimo
+        
+        salario_bruto = salario_base + valor_extras
+        
+        # descontos
+        desconto_inss = calcular_inss(salario_bruto)
+        base_ir = salario_bruto - desconto_inss
+        
+        irpf_anual = calcular_irpf_anual(base_ir)
+        salario_liquido = salario_bruto - desconto_inss - (irpf_anual / 12) # desconta o ir mensal aproximado
+        
+        paga_ir = "Sim" if irpf_anual > 0 else "Não"
+        
+        linha_formatada = f"{func['nome']:<20} | {cargo:<10} | R${salario_bruto:<8.2f} | R${valor_extras:<8.2f} | R${salario_liquido:<8.2f} | R${irpf_anual:<8.2f} | {paga_ir}"
+        linhas_relatorio.append(linha_formatada)
+
+    linhas_relatorio.append("="*100)
+
+    # 1. Exibir na tela
+    print("\n")
+    for linha in linhas_relatorio:
+        print(linha)
+    
+    # 2. Salvar no arquivo persistente
+    try:
+        with open(arquivo_folha_pagamento, "w", encoding="utf-8") as arq:
+            for linha in linhas_relatorio:
+                arq.write(linha + "\n")
+        print(f"\n>> Relatório salvo com sucesso em '{arquivo_folha_pagamento}'")
+    except Exception as e:
+        print(f"Erro ao salvar o arquivo: {e}")
+
+    input("Pressione Enter para voltar...")
+
 def cadastrar_funcionario(lista_funcionarios):
     print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  Cadastro de Funcionário  |")
