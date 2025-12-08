@@ -1,0 +1,18 @@
+===== RELATÓRIO FINANCEIRO (PROJEÇÃO DE CUSTOS) =====
+
+Custos Operacionais Mensais Inseridos:
+ - Água:      R$ 12.00
+ - Luz:       R$ 212.00
+ - Salários:  R$ 1,212.00
+ - Impostos:  R$ 121.00
+--------------------------------------------------
+CUSTO TOTAL MENSAL:        R$ 1,557.00
+Base de cálculo:           1000 pallets/mês
+--------------------------------------------------
+RESULTADOS UNITÁRIOS E PRECIFICAÇÃO:
+Custo Unitário (Pallet):   R$ 1.56
+Preço de Venda (50% margem): R$ 2.34
+--------------------------------------------------
+PROJEÇÃO DE LUCROS:
+Lucro Mensal Estimado:     R$ 778.50
+Lucro Anual Estimado:      R$ 9,342.00

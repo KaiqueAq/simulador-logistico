@@ -91,7 +91,7 @@ def ver_receita_bruta(lista_produtos, arquivo_relatorio):
 
 def calcular_custo_pallet():
     """
-    Calcula o custo por pallet e projeta lucros com base nos custos mensais.
+    Calcula o custo por pallet e projeta lucros, salvando em arquivo.
     """
     print("\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("| CUSTO E PRECIFICAÇÃO POR PALLET    |")
@@ -120,7 +120,7 @@ def calcular_custo_pallet():
     lucro_mensal = (preco_final_unitario - custo_unitario) * quantidade_pallets
     lucro_anual = lucro_mensal * 12
 
-    # 8. Mostrar resultados
+    # 8. Mostrar resultados na tela
     print("\n*----------- RESULTADOS -----------*")
     print(f"Custo operacional mensal total: R$ {custo_total_mensal:,.2f}")
     print(f"Custo unitário por pallet:      R$ {custo_unitario:,.2f}")
@@ -129,5 +129,32 @@ def calcular_custo_pallet():
     print(f"Projeção de Lucro Bruto Mensal: R$ {lucro_mensal:,.2f}")
     print(f"Projeção de Lucro Bruto Anual:  R$ {lucro_anual:,.2f}")
     print("*------------------------------------*")
+
+    # 9. Gerar arquivo persistente (relatorio_financeiro.txt)
+    nome_arquivo_fin = "relatorio_financeiro.txt"
+    try:
+        with open(nome_arquivo_fin, "w", encoding="utf-8") as arq:
+            arq.write("===== RELATÓRIO FINANCEIRO (PROJEÇÃO DE CUSTOS) =====\n\n")
+            arq.write("Custos Operacionais Mensais Inseridos:\n")
+            arq.write(f" - Água:      R$ {valor_agua:,.2f}\n")
+            arq.write(f" - Luz:       R$ {valor_luz:,.2f}\n")
+            arq.write(f" - Salários:  R$ {valor_salarios:,.2f}\n")
+            arq.write(f" - Impostos:  R$ {valor_impostos:,.2f}\n")
+            arq.write("-" * 50 + "\n")
+            arq.write(f"CUSTO TOTAL MENSAL:        R$ {custo_total_mensal:,.2f}\n")
+            arq.write(f"Base de cálculo:           {quantidade_pallets} pallets/mês\n")
+            arq.write("-" * 50 + "\n")
+            arq.write("RESULTADOS UNITÁRIOS E PRECIFICAÇÃO:\n")
+            arq.write(f"Custo Unitário (Pallet):   R$ {custo_unitario:,.2f}\n")
+            arq.write(f"Preço de Venda (50% margem): R$ {preco_final_unitario:,.2f}\n")
+            arq.write("-" * 50 + "\n")
+            arq.write("PROJEÇÃO DE LUCROS:\n")
+            arq.write(f"Lucro Mensal Estimado:     R$ {lucro_mensal:,.2f}\n")
+            arq.write(f"Lucro Anual Estimado:      R$ {lucro_anual:,.2f}\n")
+        
+        print(f"\n>> Relatório salvo com sucesso em '{nome_arquivo_fin}'")
+        
+    except Exception as e:
+        print(f"\nErro ao salvar o arquivo: {e}")
 
     input("\nPressione Enter para voltar...")
