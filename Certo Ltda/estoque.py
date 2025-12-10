@@ -23,6 +23,8 @@ def ler_inteiro(mensagem):
                 continue
             elif valor == 0:
                 return valor
+            
+            return valor
         except ValueError:
             input("Erro: Digite um número inteiro válido. Pressione Enter para tentar novamente.")
             continue
