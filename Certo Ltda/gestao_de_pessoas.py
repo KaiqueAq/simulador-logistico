@@ -23,16 +23,16 @@ def menu_gestao_pessoas(lista_funcionarios):
 
     while True:
         limpaTela()
-        print('+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=')
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('|        MENU GESTÃO DE PESSOAS      |')
-        print('------------------------------------')
+        print('*------------------------------------*')
         print('|[1] Cadastrar Funcionário           |')
         print('|[2] Gerar Folha de Pagamento        |')
         print('|[3] Listar Funcionários             |')
         print('|[4] Editar Funcionário              |')
         print('|[5] Excluir Funcionário             |')
         print('|[6] Voltar ao Menu Principal        |')
-        print('------------------------------------')
+        print('*------------------------------------*')
         opcao = input('Digite a opção desejada: ')
 
         match opcao:
@@ -130,16 +130,18 @@ def gerar_folha_pagamento(lista_funcionarios):
     input("Pressione Enter para voltar...")
 
 def cadastrar_funcionario(lista_funcionarios):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  Cadastro de Funcionário  |")
-    print("---------------------------")
+    print("*---------------------------*")
     
     # Validação simples de nome
     while True:
+        limpaTela()
         nome = input("Nome completo: ").strip()
         if len(nome) > 2:
             break
-        print("Erro: O nome é muito curto.")
+        input("Erro: O nome é muito curto. Pressione Enter para tentar novamente.")
+        continue
 
     # Validação de CPF (11 dígitos e unicidade)
     while True:
@@ -213,12 +215,11 @@ def cadastrar_funcionario(lista_funcionarios):
     lista_funcionarios.append(novo_func)
     sec.salvar_dados(lista_funcionarios, arquivo_funcionarios)
     print("Funcionário cadastrado com sucesso!")
-
-    
+   
 def editar_funcionario(lista_funcionarios):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=_")
     print("|   Editar Funcionário   |")
-    print("------------------------")
+    print("*------------------------*")
     cpf_busca = input("Digite o CPF do funcionário que deseja editar: ").strip()
 
     funcionario_encontrado = None
@@ -278,9 +279,9 @@ def editar_funcionario(lista_funcionarios):
         print("Dados atualizados.")
 
 def excluir_funcionario(lista_funcionarios):
-    print("+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  Excluir Funcionário  |")
-    print("-----------------------")
+    print("*-----------------------*")
     cpf_busca = input("Digite o CPF do funcionário que deseja excluir: ").strip()
 
     funcionario_encontrado = None
@@ -310,20 +311,27 @@ def excluir_funcionario(lista_funcionarios):
     
     input("Enter para continuar...")
 
+def chave_nome(funcionario):
+    return funcionario["nome"].lower()
 
 def listar_funcionarios(lista_funcionarios):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  Lista de Funcionários  |")
-    print("-------------------------")
+    print("*-------------------------*")
 
     if not lista_funcionarios:
         print("Nenhum funcionário cadastrado.")
         input("Enter para voltar...")
         return
-    
-    for f in lista_funcionarios:
-        print(f"Nome: {f['nome']} | Cargo: {f['cargo']} | CPF: {f['cpf']} | RG: {f['rg']}")
-    input("Enter para voltar...")
+
+    # Ordena usando a função 'chave_nome' que ta acima dessa
+    lista_ordenada = sorted(lista_funcionarios, key=chave_nome)
+
+    print("-"*112)
+    for f in lista_ordenada:
+        print(f"| Nome: {f['nome']:<30} | Cargo: {f['cargo']:<12} | CPF: {f['cpf']:<12} | RG: {f['rg']:<11} | Filhos: {f['filhos']:<2}|")
+    print("-"*112)
+    input("\nEnter para voltar...")
 
 def calcular_inss(salario_bruto):
     # cálculo simplificado progressivo 2024/2025
@@ -362,11 +370,11 @@ def popular_dados_teste(lista_funcionarios):
     # dados fictícios ajustados para as novas regras de validação (CPF 11, RG 10)
     # CPFs fictícios gerados apenas para teste
     dados_padrao = [
-        {"nome": "Ana Souza", "cpf": "11111111111", "rg": "1111111111", "endereco": "Rua A", "telefone": "11", "filhos": 1, "cargo": "Operário"},
-        {"nome": "Bruno Lima", "cpf": "22222222222", "rg": "2222222222", "endereco": "Rua B", "telefone": "22", "filhos": 0, "cargo": "Operário"},
-        {"nome": "Carlos Silva", "cpf": "33333333333", "rg": "3333333333", "endereco": "Rua C", "telefone": "33", "filhos": 2, "cargo": "Supervisor"},
+        {"nome": "Washington Luis", "cpf": "11111111111", "rg": "1111111111", "endereco": "Rua A", "telefone": "11", "filhos": 1, "cargo": "Diretor"},
+        {"nome": "Juliana Evangelista", "cpf": "22222222222", "rg": "2222222222", "endereco": "Rua B", "telefone": "22", "filhos": 0, "cargo": "Operário"},
+        {"nome": "Kaique Aquino", "cpf": "33333333333", "rg": "3333333333", "endereco": "Rua C", "telefone": "33", "filhos": 2, "cargo": "Supervisor"},
         {"nome": "Daniela Reis", "cpf": "44444444444", "rg": "4444444444", "endereco": "Rua D", "telefone": "44", "filhos": 0, "cargo": "Gerente"},
-        {"nome": "Eduardo Mello", "cpf": "55555555555", "rg": "5555555555", "endereco": "Rua E", "telefone": "55", "filhos": 3, "cargo": "Diretor"},
+        {"nome": "Rafael Pirôpo", "cpf": "55555555555", "rg": "5555555555", "endereco": "Rua E", "telefone": "55", "filhos": 3, "cargo": "Operário"},
     ]
     
     adicionados = 0
