@@ -15,14 +15,18 @@ area_grande = 4.0   # Ocupa muito espaço (Chão/Blocado)
 # Funções de validação de entradas ============================================================================
 def ler_inteiro(mensagem):
     while True:
+        limpaTela()
         try:
             valor = int(input(mensagem))
             if valor < 0:
                 print("Erro: O valor não pode ser negativo.")
                 continue
+            elif valor == 0:
+                break
             return valor
         except ValueError:
-            print("Erro: Digite um número inteiro válido.")
+            input("Erro: Digite um número inteiro válido. Pressione Enter para tentar novamente.")
+            continue
 
 def ler_float(mensagem):
     while True:
@@ -48,14 +52,14 @@ def ler_data(mensagem):
 def menu_estoque(lista_produtos):
     while True:
         limpaTela()
-        print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
         print('| MENU ESTOQUE - (ESTOQUE CERTO) |')
-        print('--------------------------------')
+        print('*--------------------------------*')
         print('|[1] Entrada de Produto          |')
         print('|[2] Saída de Produto            |')
         print('|[3] Status do Galpão (3000m²)   |') # Nova opção adicionada
         print('|[4] Voltar ao Menu Principal    |')
-        print('--------------------------------')
+        print('*--------------------------------*')
         opcao = input('Digite a opção desejada: ')
         match opcao:
             case "1":
@@ -195,16 +199,19 @@ def popular_dados_teste_produto(lista_produtos):
 
 def menu_entrada_produto(lista_produtos):
     if not lista_produtos:
-        print("A lista de produtos está vazia.")
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+        print('|      LISTA DE ESTOQUE      |')
+        print('*----------------------------*')
+        print("O estoque está vazio no momento.")
         resp = input("Deseja carregar 10 produtos de teste automaticamente? (S/N): ").lower()
         if resp == 's':
             popular_dados_teste_produto(lista_produtos)
 
     while True:
         limpaTela()
-        print('\n_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
         print('|    MENU ENTRADA DE PRODUTO    |')
-        print('-------------------------------')
+        print('*-------------------------------*')
         print('|[1] Cadastrar Produto          |')
         print('|[2] Listar Produtos            |')
         print('|[3] Editar Produto             |')
@@ -230,11 +237,11 @@ def menu_entrada_produto(lista_produtos):
             case _:
                 input('Opção inválida.')
 
-# Lógica do galpão ==============================================================================
+# Lógica do galpão
 def ver_status_galpao(lista_produtos):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|  STATUS DE OCUPAÇÃO (3000m²)  |")
-    print("-------------------------------")
+    print("*-------------------------------*")
     
     area_ocupada = 0.0
     
@@ -274,13 +281,19 @@ def ver_status_galpao(lista_produtos):
         
     input("\nPressione Enter para voltar...")
 
-# Parte do Menu de Entrada ====================================================================================
+# Parte do Menu de Entrada 
 def cadastrar_produto(lista_produtos):
     while True:
-        qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ")
+        limpaTela()
+        print('_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+        print('|    CADASTRANDO DE PRODUTO    |')
+        print('*------------------------------*')
+        qnts_produtos = ler_inteiro("Quantos produtos deseja cadastrar? ([0] para voltar) ")
         
-        if qnts_produtos < 10:
-            print("Requisito: Cadastre no mínimo 10 produtos de uma vez.")
+        if qnts_produtos == 0:
+            return lista_produtos
+        elif qnts_produtos < 10:
+            input("Requisito: Cadastre no mínimo 10 produtos de uma vez. Pressione Enter para continuar.")
             continue
         
         for i in range(qnts_produtos):
@@ -358,15 +371,17 @@ def cadastrar_produto(lista_produtos):
     return lista_produtos
 
 def listar_produtos(lista_produtos):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|       LISTA DE ESTOQUE        |")
-    print("-------------------------------")
+    print("*-------------------------------*")
 
+    # Percorre o Estoque e verifica se está vazio
     if not lista_produtos:
-        print("\n>>> O estoque está vazio no momento.")
+        print("O estoque está vazio no momento.")
         input("Pressione Enter para voltar...")
         return
 
+    # Mostra os produtos cadastrados
     for produto in lista_produtos:
         print(f"Código:     {produto['codigo']}")
         print(f"Nome:       {produto['nome']}")
@@ -381,9 +396,9 @@ def listar_produtos(lista_produtos):
     input("\nPressione Enter para voltar ao menu...")   
 
 def editar_produto(lista_produtos):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=_")
     print("|     EDITAR PRODUTO     |")
-    print("------------------------")
+    print("*------------------------*")
     id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja editar: ")
 
     # Busca o produto na lista
@@ -455,9 +470,9 @@ def editar_produto(lista_produtos):
     return lista_produtos
 
 def excluir_produto(lista_produtos):
-    print("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_")
     print("|        EXCLUIR PRODUTO        |")
-    print("-------------------------------")
+    print("*-------------------------------*")
     
     id_busca = ler_inteiro("Digite o Código (ID) do produto que deseja excluir: ")
 
