@@ -22,8 +22,7 @@ def ler_inteiro(mensagem):
                 print("Erro: O valor não pode ser negativo.")
                 continue
             elif valor == 0:
-                break
-            return valor
+                return valor
         except ValueError:
             input("Erro: Digite um número inteiro válido. Pressione Enter para tentar novamente.")
             continue
